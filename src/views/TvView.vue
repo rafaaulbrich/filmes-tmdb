@@ -38,7 +38,7 @@ onMounted(async () => {
   <loading v-model:active="isLoading" is-full-page />
   <div class="tv-list">
     <div v-for="programa in programas" :key="programa.id" class="tv-card">
-      <img :src="`https://image.tmdb.org/t/p/w500${programa.poster_path}`" :alt="programa.title" />
+      <img :src="`https://image.tmdb.org/t/p/w500${programa.poster_path}`" :alt="programa.name" />
       <div class="tv-details">
         <p class="tv-title">{{ programa.name }}</p>
         <p class="tv-release-date">{{ formatDate(programa.first_air_date) }}</p>
