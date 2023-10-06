@@ -34,7 +34,7 @@ onMounted(async () => {
     <li
       v-for="genre in genreStore.genres"
       :key="genre.id"
-      @click="listMovies(genre.id)"
+      @click="listTv(genre.id)"
       class="genre-item"
     >
       {{ genre.name }}
@@ -48,7 +48,7 @@ onMounted(async () => {
         <p class="tv-title">{{ programa.name }}</p>
         <p class="tv-release-date">{{ formatDate(programa.first_air_date) }}</p>
         <p class="tv-genres">
-          <span v-for="genre_id in movie.genre_ids" :key="genre_id" @click="listTv(genre_id)">
+          <span v-for="genre_id in programa.genre_ids" :key="genre_id" @click="listTv(genre_id)">
             {{ genreStore.getGenreName(genre_id) }}
           </span>
         </p>
