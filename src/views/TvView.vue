@@ -10,6 +10,7 @@ const programas = ref([])
 const formatDate = (date) => new Date(date).toLocaleDateString('pt-BR')
 
 const listTv = async (genreId) => {
+  genreStore.setCurrentGenreId(genreId)
   isLoading.value = true
   const response = await api.get('discover/tv', {
     params: {
@@ -36,6 +37,7 @@ onMounted(async () => {
       :key="genre.id"
       @click="listTv(genre.id)"
       class="genre-item"
+      :class="{ active: genre.id === genreStore.currentGenreId }"
     >
       {{ genre.name }}
     </li>
@@ -48,7 +50,12 @@ onMounted(async () => {
         <p class="tv-title">{{ programa.name }}</p>
         <p class="tv-release-date">{{ formatDate(programa.first_air_date) }}</p>
         <p class="tv-genres">
-          <span v-for="genre_id in programa.genre_ids" :key="genre_id" @click="listTv(genre_id)">
+          <span
+            v-for="genre_id in programa.genre_ids"
+            :key="genre_id"
+            @click="listTv(genre_id)"
+            :class="{ active: genre_id === genreStore.currentGenreId }"
+          >
             {{ genreStore.getGenreName(genre_id) }}
           </span>
         </p>
@@ -139,5 +146,16 @@ onMounted(async () => {
   cursor: pointer;
   background-color: #e45ddd;
   box-shadow: 0 0 0.5rem #9e3799;
+}
+
+.active {
+  background-color: #e45ddd;
+  font-weight: bolder;
+}
+
+.tv-genres span.active {
+  background-color: #e45ddd;
+  color: #fff;
+  font-weight: bolder;
 }
 </style>
