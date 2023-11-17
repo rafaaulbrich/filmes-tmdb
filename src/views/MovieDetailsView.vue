@@ -26,16 +26,15 @@
       />
 
       <div class="details">
-        <h1>Filme: {{ movieStore.currentMovie.title }}</h1>
-        <p>{{ movieStore.currentMovie.tagline }}</p>
-        <p>{{ movieStore.currentMovie.overview }}</p>
-        <p>Orçamento: ${{ movieStore.currentMovie.budget }}</p>
-        <p>Avaliação: {{ movieStore.currentMovie.vote_average }}</p>
+        <h1>Filme - {{ movieStore.currentMovie.title }}</h1>
+        <p>{{ movieStore.currentMovie.tagline }} {{ movieStore.currentMovie.overview }}</p> 
+        <p>Orçamento: ${{ movieStore.currentMovie.budget }} </p>
+        <p>Avaliação: {{ movieStore.currentMovie.vote_average }}</p> 
       </div>
     </div>
   </div>
 
-  <p>Produtoras</p>
+  <h3>Produtoras:</h3>
   <div class="companies">
     <template
       v-for="company in movieStore.currentMovie.production_companies"
@@ -60,4 +59,5 @@
     align-items: center;
     margin-bottom: 2rem;
   }
+
 </style>
