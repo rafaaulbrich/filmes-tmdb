@@ -1,17 +1,22 @@
 <script setup>
 import { ref, onMounted } from 'vue'
 import api from '@/plugins/axios'
-import Loading from 'vue-loading-overlay'
 import genreStore from '@/stores/genres'
+import { useTemplateStore } from '@/stores/template'
+import { useRouter } from 'vue-router'
 
-const isLoading = ref(false)
+const router = useRouter()
+const templateStore = useTemplateStore()
 const movies = ref([])
 
-const formatDate = (date) => new Date(date).toLocaleDateString('pt-BR')
+function openMovie(movieId) {
+  router.push({ name: 'MovieDetails', params: { movieId } });
+}
 
+const formatDate = (date) => new Date(date).toLocaleDateString('pt-BR')
 const listMovies = async (genreId) => {
   genreStore.setCurrentGenreId(genreId)
-  isLoading.value = true
+  templateStore.setIsLoading(true)
   const response = await api.get('discover/movie', {
     params: {
       with_genres: genreId,
@@ -19,13 +24,13 @@ const listMovies = async (genreId) => {
     }
   })
   movies.value = response.data.results
-  isLoading.value = false
+  templateStore.setIsLoading(false)
 }
 
 onMounted(async () => {
-  isLoading.value = true
+  templateStore.setIsLoading(true)
   await genreStore.getAllGenres('movie')
-  isLoading.value = false
+  templateStore.setIsLoading(false)
 })
 </script>
 
@@ -42,10 +47,9 @@ onMounted(async () => {
       {{ genre.name }}
     </li>
   </ul>
-  <loading v-model:active="isLoading" is-full-page />
   <div class="movie-list">
     <div v-for="movie in movies" :key="movie.id" class="movie-card">
-      <img :src="`https://image.tmdb.org/t/p/w500${movie.poster_path}`" :alt="movie.title" />
+      <img :src="`https://image.tmdb.org/t/p/w500${movie.poster_path}`" :alt="movie.title" @click="openMovie(movie.id)" />
       <div class="movie-details">
         <p class="movie-title">{{ movie.title }}</p>
         <p class="movie-release-date">{{ formatDate(movie.release_date) }}</p>

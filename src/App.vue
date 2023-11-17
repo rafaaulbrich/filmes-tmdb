@@ -1,7 +1,10 @@
 <script setup>
 import { ref, onMounted } from 'vue'
 import api from './plugins/axios'
+import Loading from 'vue-loading-overlay'
+import { useTemplateStore } from '@/stores/template'
 
+const templateStore = useTemplateStore()
 const moviesGenres = ref([])
 const TVGenres = ref([])
 
@@ -21,6 +24,8 @@ onMounted(async () => {
       <router-link to="/tv">Programas de TV</router-link>
     </nav>
   </header>
+  <loading v-model:active="templateStore.isLoading" is-full-page />
+
   <main>
     <router-view />
   </main>
