@@ -20,7 +20,7 @@
   
   <div class="main">
     <div class="content">
-      <img
+      <img class="img"
         :src="`https://image.tmdb.org/t/p/w185${movieStore.currentMovie.poster_path}`"
         :alt="movieStore.currentMovie.title"
       />
@@ -29,7 +29,7 @@
         <h1>Filme - {{ movieStore.currentMovie.title }}</h1>
         <p>{{ movieStore.currentMovie.tagline }} {{ movieStore.currentMovie.overview }}</p> 
         <p>Orçamento: ${{ movieStore.currentMovie.budget }} </p>
-        <p>Avaliação: {{ movieStore.currentMovie.vote_average }}</p> 
+        <p>Avaliação: {{ movieStore.currentMovie.vote_average.toFixed(0) }}</p> 
       </div>
     </div>
   </div>
@@ -59,5 +59,10 @@
     align-items: center;
     margin-bottom: 2rem;
   }
-
+  .img{
+    margin-top: 15px;
+    margin-left: 40%;
+    height: 350px;
+    width: 250px;
+  }
 </style>
