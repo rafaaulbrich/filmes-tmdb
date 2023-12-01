@@ -12,8 +12,8 @@ const programas = ref([])
 
 const formatDate = (date) => new Date(date).toLocaleDateString('pt-BR')
 
-function openMovie(movieId) {
-  router.push({ name: 'MovieDetails', params: { movieId } });
+function openMovie(programaId) { 
+  router.push({ name: 'TVDetails', params: { programaId } });
 }
 
 const listTv = async (genreId) => {

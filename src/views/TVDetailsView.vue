@@ -1,18 +1,18 @@
 <script setup>
   import { defineProps, onMounted } from 'vue';
-  import { useMovieStore } from '@/stores/movie';
+  import { useTVStore } from '@/stores/tv';
   
-  const movieStore = useMovieStore();
+  const TVStore = useTVStore();
 
   const props = defineProps({
-    movieId: {
+    programaId: {
       type: Number,
       required: true,
     },
   });
 
   onMounted(async () => {
-    await movieStore.getMovieDetail(props.movieId);
+    await TVStore.getTVDetail(props.programaId);
   });
 </script>
 
@@ -21,15 +21,14 @@
   <div class="main">
     <div class="content">
       <img class="img"
-        :src="`https://image.tmdb.org/t/p/w185${movieStore.currentMovie.poster_path}`"
-        :alt="movieStore.currentMovie.title"
+        :src="`https://image.tmdb.org/t/p/w185${TVStore.currentTV.poster_path}`"
+        :alt="TVStore.currentTV.title"
       />
 
       <div class="details">
-        <h1>Filme - {{ movieStore.currentMovie.title }}</h1>
-        <p>{{ movieStore.currentMovie.tagline }} {{ movieStore.currentMovie.overview }}</p> 
-        <p>Orçamento: ${{ movieStore.currentMovie.budget }} </p>        
-        <p>Avaliação: {{ movieStore.currentMovie.vote_average.toFixed(0) }}</p> 
+        <h1>Programa - {{ TVStore.currentTV.name }}</h1>
+        <p>{{ TVStore.currentTV.tagline }} {{ TVStore.currentTV.overview }}</p>        
+        <p>Avaliação: {{ TVStore.currentTV.vote_average.toFixed(0) }}</p> 
       </div>
     </div>
   </div>
@@ -37,7 +36,7 @@
   <h3>Produtoras:</h3>
   <div class="companies">
     <template
-      v-for="company in movieStore.currentMovie.production_companies"
+      v-for="company in TVStore.currentTV.production_companies"
       :key="company.id"
     >
       <img
